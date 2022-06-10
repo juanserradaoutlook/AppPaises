@@ -1,0 +1,16 @@
+<!--
+    Este es el hijo y al escribir el nombre del pais, presionamos Enter, y se ejecuta la funcion buscar
+    esta funcion buscar en el controlador emitira el termino(parametro) y el padre lo escuchara
+    el padre entonces ejecutara la funcion buscarx con el termino(parametro) recibido
+-->
+
+<form (ngSubmit)="buscar()" autocomplete="off" action="">
+    <input 
+        type="text"
+        name="termino"
+        [placeholder]=placeholder
+        class="form-control"
+        [(ngModel)] = "termino"
+        (input)="teclaPresionada()"
+    >
+</form>
