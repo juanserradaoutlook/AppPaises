@@ -61,4 +61,44 @@ export class PaisService {
     return this.http.get<any>(url, options); // CUARTA forma, Aca le pasamos la URL y el options con varios parametros configurados
   }
 
+  buscarCovid(termino: string): Observable<Clima>{ // Nos devuelve un observable de tipo Clima y, es un objeto
+    const url = 'https://weatherapi-com.p.rapidapi.com/current.json';
+    const options = {
+      method: 'GET',
+      url: 'https://weatherapi-com.p.rapidapi.com/current.json',
+      params: {country: termino},
+      headers: {
+        'X-RapidAPI-Key': 'edbe4ec97fmsh1c169e374818823p133cb7jsn2ec462bddea3',
+        'X-RapidAPI-Host': 'covid-193.p.rapidapi.com'
+      }
+    };
+    return this.http.get<Clima>(url, options); // otra igual a la CUARTA forma, Aca le pasamos la URL y el options con varios parametros configurados
+  }
+
+  buscarClima2(termino: string){
+    const promise = new Promise<Clima | void>((resolve, reject) => {
+      const url = 'https://weatherapi-com.p.rapidapi.com/current.json';
+      const options = {
+        method: 'GET',
+        url: 'https://weatherapi-com.p.rapidapi.com/current.json',
+        params: {q: termino},
+        headers: {
+          'X-RapidAPI-Key': 'edbe4ec97fmsh1c169e374818823p133cb7jsn2ec462bddea3',
+          'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+        }
+      }; 
+      this.http.get<Clima>(url, options).subscribe({
+        next: (res) => {
+          console.log(res);
+          resolve();
+        },
+        error: (err) => {
+          console.log(err);
+          reject();
+        }
+      });
+    });
+    return promise;
+  }
+
 }

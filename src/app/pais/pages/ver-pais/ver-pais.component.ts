@@ -56,6 +56,9 @@ export class VerPaisComponent implements OnInit {
                 console.info(err);   
               },
               complete: () => {
+                this.paisService.buscarClima2(this.pais.name.common)
+                .then((val) => console.log(val))
+
                 console.info('Clima Completado');
               }
             });
