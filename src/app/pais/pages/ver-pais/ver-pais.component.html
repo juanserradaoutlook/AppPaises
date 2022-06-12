@@ -34,8 +34,8 @@
         </div>
     </div>
 
-    <h3>Traducciones</h3>
-    <div class="row">
+    <div class="row mt-4">
+        <h3>Traducciones</h3>
         <div class="col">
             <span class="badge bg-primary me-1"> {{ pais.translations['fra'].official}}</span>
             <span class="badge bg-primary me-1"> {{ pais.translations['pol'].official}}</span>
@@ -45,6 +45,22 @@
             <span class="badge bg-primary me-1"> {{ pais.translations['est'].official}}</span>
             <span class="badge bg-primary me-1"> {{ pais.translations['slk'].official}}</span>
             <span class="badge bg-primary me-1"> {{ pais.translations['urd'].official}}</span>
+        </div>
+    </div>
+
+    <div *ngIf="climaPais" class="row mt-4">
+        <div class="col">
+            <h3>Clima</h3>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Temperatura</strong> {{ climaPais.current.temp_c }} °C 
+                    <img [src]="climaPais.current.condition.icon" alt="" class="small-flag" > 
+                    {{ climaPais.current.condition.text }}
+                </li>
+            </ul>
+            <ul class="list-group">
+                
+            </ul>
         </div>
     </div>
 </ng-template>

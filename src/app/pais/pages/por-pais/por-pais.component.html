@@ -11,11 +11,19 @@
        ></app-pais-input>
     </div>
 </div>
+<ul *ngIf="mostrarDebounce" class="list-group">
+    <li *ngFor="let pais of paisesSugeridos" class="list-group-item list-group-item-action">
+        <a class="nav-link" [routerLink]="[ '/pais', pais.cca2 ]">{{pais.capital}}, {{pais.name.common}}</a> 
+    </li>
+    <li class="list-group-item list-group-item-action">
+        <a (click)="buscarx(termino)" class="nav-link">Buscar {{ termino | titlecase }}...</a>
+    </li>
+</ul>
 <hr>
 <div *ngIf="hayError" class="alert alert-danger">
     No se encontro nada con el termino <strong> {{ termino }} </strong>
 </div>
-<div *ngIf="paises.length > 0" class="row">
+<div *ngIf="paises.length > 0" class="row animate__animated animate__fadeInDown">
     <div class="col">
         <app-pais-tabla [paises]="paises"></app-pais-tabla>
     </div>

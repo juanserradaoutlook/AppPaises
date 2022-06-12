@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { observable, switchMap, tap } from 'rxjs';
+import { Clima } from '../../interfaces/clima.interface';
 import { Country } from '../../interfaces/pais.interface';
 import { PaisService } from '../../services/pais.service';
 
@@ -13,7 +14,8 @@ import { PaisService } from '../../services/pais.service';
 export class VerPaisComponent implements OnInit {
 
   public pais!: Country;
-  constructor(private activateRoute: ActivatedRoute, private paisService: PaisService) { }
+  public climaPais!: Clima;
+  constructor(private activateRoute: ActivatedRoute, private paisService: PaisService ) { }
 
   ngOnInit(): void {
     //this.activateRoute.params.subscribe(
@@ -41,9 +43,31 @@ export class VerPaisComponent implements OnInit {
       .subscribe({
         next: (pais) => {
           console.log(pais);
-          this.pais = pais[0];
+          this.pais = pais[0]; // Pais nos devuelve un array y dentro esta un objeto, ahi esta la info, es por eso que leo o extraigo el primer elemento (unico) del arreglo
+
+            this.paisService.buscarClima(this.pais.name.common).subscribe({
+              next: (clima) => {
+                console.log(clima);
+                this.climaPais = clima; // Clima por el contrario nos devuelve un objeto de una vez
+              },
+              error: (err) => {
+                console.log('Error al Localizar el Clima...');
+                console.error();
+                console.info(err);   
+              },
+              complete: () => {
+                console.info('Clima Completado');
+              }
+            });
         },
-        
+        error: (err) => {
+          console.log('Error al Localizar el Pais...');
+          console.error();
+          console.info(err);   
+        },
+        complete: () => { // No esta pasando por el complete del primer servicio, solo muestr el complete de Clima
+          console.log('Pais COmpletado');
+        }
       });
   }
 
